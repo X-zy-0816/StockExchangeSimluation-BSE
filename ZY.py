@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy
 import csv
 import random
+import os
 
 from BSE import market_session
 
@@ -23,7 +24,7 @@ if __name__ == "__main__":
 	order_interval = 60
 	order_schedule = {'sup' : supply_schedule, 'dem' : demand_schedule, 'interval' : order_interval, 'timemode' : 'periodic'}
 
-	sellers = [('ZIP', 11)]
+	sellers = [('ZIP', 20)]
 	buyers = sellers
 	traders = {'sellers' : sellers, 'buyers' : buyers}
 
@@ -53,7 +54,11 @@ if __name__ == "__main__":
 			y = numpy.append(y, price)
 
 	plt.plot(x, y, 'x', color = 'black')
-	print('234')
+
+	flag = True
+	if flag :
+		os.system('rm Zhiyuan*')
+		os.system('rm avg_balance.csv')
 
 
 

@@ -1,0 +1,5 @@
+Giveaway: 最基础的交易机器人，当价格满足交易上下限的时候，ask方直接使用bid方的价格进行购买。（靠运气盈利，当ask方的设定价格小于bid方，而却使用）
+
+ZIC: Zero Intelligence Constrance, 只有最基础的限制
+
+ZIP: ZI Plus, 一边交易一边分析价格，最终靠近equbilium price 
