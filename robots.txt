@@ -1,5 +1,16 @@
+交易市场有多个交易日 每个交易日有多个交易期 每个交易期开始更新商品的价值 期间可以修改报价
+
 Giveaway: 最基础的交易机器人，当价格满足交易上下限的时候，ask方直接使用bid方的价格进行购买。（靠运气盈利，当ask方的设定价格小于bid方，而却使用）
 
-ZIC: Zero Intelligence Constrance, 只有最基础的限制
+ZIC: Zero Intelligence Constraintance, 只有最基础的限制， 通过读取level 2 market的出价（要价）数据（同时包含买卖方），得到最高与最低出价（要价）为MaxPrice 与 MinPrice，结合程序设定的Limit Price
+设定机器人的价格范围 然后进行交易 （本质上还是随机出价，但是因为参考了LOB的价格 所以比Giveaway有着更高的利润）
 
-ZIP: ZI Plus, 一边交易一边分析价格，最终靠近equbilium price 
+Shaver: 通过获取历史交易中最高卖价以及最低买价设置 bid卖方通过对之前最高的卖价加一的方式提高卖价 ask买家通过对之前最低买价减一的方式降低买价 （两者都是为了降低成本）， （最开始的时候没有可以参考的成交价格就按照自己的limit的价格逐渐提高或下降）
+通过这样的方式达成交易并且最终达到equbilium pirce
+
+Sniper: steal and deal Shaver的问题如果单次交易期较短，那么+1 -1的方式可能来不及达成交易，于是Sniper在Shaver上进行修改，使其在交易快要结束的时候才会开始shave，并且根据倒计时的时间调整加减的幅度，使其更快达成交易
+
+ZIP: ZI Plus, 一边交易一边分析价格，最终靠近equbilium price或一个较为均衡的价格并保持
+
+
+https://www.fx361.com/page/2019/1209/6141728.shtml
