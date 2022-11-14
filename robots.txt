@@ -14,3 +14,20 @@ ZIP: ZI Plus, 一边交易一边分析价格，最终靠近equbilium price或一
 
 
 https://www.fx361.com/page/2019/1209/6141728.shtml
+
+
+题目：：：： 1. PRZI **** 在波动较大的市场中的表现更好？
+
+
+
+When we want to run an experiment with BSE, we configure the experiment (as we saw in detail in the previous sections) and then call the "market_session" function. This function is responsible for all the functionality of BSE. How it roughly works, is:
+
+It first populates the market with traders (using the "populate_market" function) by instantiating them from their respective classes and gives each a unique id.
+Then loops around until the end of the experiment. The time of the market is increased by a timestep on every iteration. One timestep is not one (market) second but is equal to a fraction of a second. The exact fraction is determined by the number of traders (e.g. for a market with 5 sellers and 5 buyers, the timestep is 1/10 of a second).
+On every iteration:
+A call to the "customer_orders" is made. This function does one of two things. It initially creates limit orders for all traders that will be given to them in the future (remember traders are resupplied with orders based on a schedule with an interval). If it already created the orders, on future calls it checks which of those orders should be issued (based on the current time) to the traders and sends them by calling the "add_order" method of that trader.
+A trader is selected at random and the trader's "getorder" method is called thus allowing that trader to trade. What this means, is that the selected trader can issue a new order (which adjusts its current order if the trade has one) or can do nothing if the trader is happy with its current order (or lack of order). (Note: This trader order is different from the one given to the trader by "customer_orders". This one is the order the trader issues to the market while the other is the trader's private value)
+If the selected trader issued a new order:
+That order is processed by the exchange using the "process_order2" method. This method either returns a "transaction_record" indicating that the order was executed and resulted in a trade or None indicating that the order was not executed (i.e. just added to the LOB). The transaction record contains all information of a trade (time, price, involved parties etc). If the order resulted to a trade, the two traders involved are also notified using their "bookkeep" methods.
+After the order is processed, all traders are notified with the new state of the LOB (and the trade if it happened). This allows traders to adjust their strategy given the new state of the LOB.
+Finally at the end of the session the function produces the appropriate output files.
