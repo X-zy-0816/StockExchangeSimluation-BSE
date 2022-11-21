@@ -5,7 +5,9 @@ import random
 import os
 import math
 
+
 from BSE import market_session
+
 
 #global varibales
 
@@ -31,7 +33,7 @@ if __name__ == "__main__":
 		return int(round(offset, 0))
 
 
-	price_range = (5, 205)
+	price_range = (80, 320)
 	price_range_2 = (250, 499)
 	#定义两个带offset的价格区间
 	price_range_3 = (95, 95, schedule_offsetfn)
@@ -47,12 +49,12 @@ if __name__ == "__main__":
 		'''
 
 	#可以选择设置多段时间-价格区间，用以形成 'shock changes' 模拟真实市场上 equbilium price 的不停变化
-	supply_schedule = [{'from' : start_time, 'to' : 5 * 60, 'ranges' : [price_range], 'stepmode' : 'fixed'},
-					   {'from' : 5 * 60, 'to' : end_time, 'ranges' : [price_range_2], 'stepmode' : 'fixed'}]
-	demand_schedule = [{'from': start_time, 'to': 5 * 60, 'ranges': [price_range], 'stepmode': 'fixed'},
-					   {'from': 5 * 60, 'to': end_time, 'ranges': [price_range_2], 'stepmode': 'fixed'}]
-	#supply_schedule = [{'from' : start_time, 'to' : end_time, 'ranges' : [price_range_3], 'stepmode' : 'fixed'}]
-	#demand_schedule = [{'from' : start_time, 'to' : end_time, 'ranges' : [price_range_4], 'stepmode' : 'fixed'}]
+	#supply_schedule = [{'from' : start_time, 'to' : 5 * 60, 'ranges' : [price_range], 'stepmode' : 'fixed'},
+	#				   {'from' : 5 * 60, 'to' : end_time, 'ranges' : [price_range_2], 'stepmode' : 'fixed'}]
+	#demand_schedule = [{'from': start_time, 'to': 5 * 60, 'ranges': [price_range], 'stepmode': 'fixed'},
+	#				   {'from': 5 * 60, 'to': end_time, 'ranges': [price_range_2], 'stepmode': 'fixed'}]
+	supply_schedule = [{'from' : start_time, 'to' : end_time, 'ranges' : [price_range], 'stepmode' : 'fixed'}]
+	demand_schedule = [{'from' : start_time, 'to' : end_time, 'ranges' : [price_range], 'stepmode' : 'fixed'}]
 
 
 	#设置交易间隔    todo: 猜测：每60s添加新的订单 ——》市场收到新的订单满足买家的策略开始交易
@@ -66,8 +68,7 @@ if __name__ == "__main__":
 						drip-poisson : 柏松分布报价
 	'''
 	#order_schedule = {'sup' : supply_schedule, 'dem' : demand_schedule, 'interval' : order_interval, 'timemode' : 'periodic'}
-	order_schedule = {'sup': supply_schedule, 'dem': demand_schedule, 'interval': order_interval,
-					  'timemode': 'drip-fixed'}
+	order_schedule = {'sup': supply_schedule, 'dem': demand_schedule, 'interval': order_interval, 'timemode': 'periodic'}
 
 
 	#设置交易机器人类型及数量
@@ -86,7 +87,7 @@ if __name__ == "__main__":
 	tdump = open('avg_balance.csv', 'w')
 	dump_all = True
 
-	random.seed(1)
+	#random.seed(1)
 	#此处调用BSE.py的函数开启市场交易，并输出对应的csv文件
 	market_session(trail_id, start_time, end_time, traders, order_schedule, tdump, dump_all, verbose)
 
@@ -109,7 +110,7 @@ if __name__ == "__main__":
 
 
 	#删除测试文件
-	flag = True
+	flag = False
 	if flag :
 		os.system('rm Zhiyuan*')
 		os.system('rm avg_balance.csv')

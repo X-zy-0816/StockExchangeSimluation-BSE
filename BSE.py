@@ -53,6 +53,7 @@ import math
 import random
 import time as chrono
 
+
 # a bunch of system constants (globals)
 bse_sys_minprice = 1                    # minimum price in the system, in cents/pennies
 bse_sys_maxprice = 500                  # maximum price in the system, in cents/pennies
@@ -1479,6 +1480,8 @@ class Trader_ZIP(Trader):
         self.prev_best_ask_q = lob_best_ask_q
 
 
+
+
 # ########################---trader-types have all been defined now--################
 
 
@@ -2084,7 +2087,7 @@ if __name__ == "__main__":
     order_interval = 5
 
     order_sched = {'sup': supply_schedule, 'dem': demand_schedule,
-                   'interval': order_interval, 'timemode': 'drip-poisson'}
+                   'interval': order_interval, 'timemode': 'periodic'}
 
     # Use 'periodic' if you want the traders' assignments to all arrive simultaneously & periodically
     #               'order_interval': 30, 'timemode': 'periodic'}
